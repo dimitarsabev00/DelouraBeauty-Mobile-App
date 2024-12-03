@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Image, Text, View, ActivityIndicator } from "react-native";
+import { Alert, Image, Text, View } from "react-native";
 import { Brand, Screen1 } from "../../assets";
 import * as SecureStore from "expo-secure-store";
 import { useRouter } from "expo-router";
+import Loader from "@/components/Loader";
 
 export default function Onboarding() {
   const [loading, setLoading] = useState(true); // For showing a loader while checking state
@@ -51,11 +52,7 @@ export default function Onboarding() {
 
   if (loading) {
     // Show a loading indicator while checking onboarding status
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#555" />
-      </View>
-    );
+    return <Loader />;
   }
 
   return (
