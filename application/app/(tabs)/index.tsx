@@ -9,8 +9,8 @@ import {
 import React, { useEffect, useState } from "react";
 
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-import { Screen3 } from "../assets";
-import { fetchFeeds } from "../configs/sanity";
+import { Screen3 } from "../../assets";
+import { fetchFeeds } from "../../configs/sanity";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_FEEDS } from "@/store/actions/feedsActions";
 

@@ -16,7 +16,7 @@ export default function Onboarding() {
         const onboardingStatus = await SecureStore.getItemAsync("onboarding");
         if (onboardingStatus === "true") {
           // Navigate directly to Home if onboarding is already completed
-          router.push("/home");
+          router.push('/(tabs)');
         } else {
           // If not completed, stay on the Onboarding screen
           setLoading(false);
