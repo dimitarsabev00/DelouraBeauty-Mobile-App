@@ -7,19 +7,24 @@ import {
   Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
+import { addToCart } from "@/store/actions/cartActions";
+
 import Loader from "@/components/Loader";
 
 const ProductDetails = () => {
   const { _id } = useLocalSearchParams(); // Use routeParams to get query parameters
 
+  const cartItems = useSelector((state) => state.cartItems);
   const feeds = useSelector((state) => state.feeds);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const [qty, setQty] = useState(1);
+
+  const dispatch = useDispatch();
 
   const screenHeight = Math.round(Dimensions.get("window").height);
 
@@ -38,6 +43,10 @@ const ProductDetails = () => {
     setQty(newQty >= 1 ? newQty : 1);
   };
 
+  const handleAddedProductToCart = () => {
+    dispatch(addToCart({ data: data, qty: qty }));
+  };
+
   return (
     <View className="flex-1 items-start justify-start bg-[#EBEAEF] space-y-4">
       {isLoading ? (
@@ -50,7 +59,9 @@ const ProductDetails = () => {
               <TouchableOpacity onPress={() => router.back()}>
                 <Entypo name="chevron-left" size={32} color={"#555"} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => router.navigate("/shopping-cart")}
+              >
                 <MaterialIcons name="shopping-cart" size={32} color={"#555"} />
               </TouchableOpacity>
             </View>
@@ -126,6 +137,24 @@ const ProductDetails = () => {
                   <Text className="text-xl font-bold text-[#555]">+</Text>
                 </TouchableOpacity>
               </View>
+
+              {cartItems?.cart?.filter((item) => item?.data?._id === data?._id)
+                ?.length > 0 ? (
+                <TouchableOpacity className="bg-black px-4 py-2 rounded-xl">
+                  <Text className="text-base font-semibold text-gray-50">
+                    Added
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={handleAddedProductToCart}
+                  className="bg-black px-4 py-2 rounded-xl"
+                >
+                  <Text className="text-base font-semibold text-gray-50">
+                    Add to Cart
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </>
