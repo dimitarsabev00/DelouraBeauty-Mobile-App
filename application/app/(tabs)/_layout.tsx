@@ -24,6 +24,18 @@ const TabsLayout = () => {
           ),
         }}
       />
+      <Tabs.Screen
+        name="shopping-cart"
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <FontAwesome
+              name="shopping-cart"
+              size={32}
+              color={focused ? "#fff" : "#5C5576"}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 };
